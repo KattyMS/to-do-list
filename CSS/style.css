@@ -1,0 +1,114 @@
+body {
+    background-color: #ffd6ba;
+    font-family: "Indie Flower", cursive;
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Indie Flower", cursive;
+    background: repeating-linear-gradient(white,
+            /* Empieza con blanco */
+            white 24px,
+            /* Mantén blanco por 24px */
+            #9e9fa5 25px
+            /* Línea gris cada 25px (1px grosor) */
+        );
+}
+
+body::before {
+    content: "";
+    /* to create an empty element */
+    position: absolute;
+    /* to posisionate with respect to the container */
+    left: 50px;
+    /* located a 20px from the left */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    /* widht of the line */
+    background-color: #00adb5;
+    /* color of the margin */
+}
+
+.notebook {
+    /* backgrund that simulates horizontal lines with a repetitive gradient */
+    background: repeating-linear-gradient(white,
+            /* start with white */
+            white 24px,
+            /* keep the white for 24px */
+            #393e46 25px
+            /* add gray line of 1px */
+        );
+    border: 2px solid #ccc;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.8rem;
+    position: relative;
+}
+
+/* to create a the margin line of the notebook */
+.notebook::before {
+    content: "";
+    /* to create an empty element */
+    position: absolute;
+    /* to posisionate with respect to the container */
+    left: 20px;
+    /* located a 20px from the left */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    /* widht of the line */
+    background-color: #00adb5;
+    /* color of the margin */
+}
+
+/*  title  */
+h1 {
+    text-align: center;
+    color: #222831;
+    margin-bottom: 1rem;
+}
+
+/*  form (input + button)  */
+form {
+    display: flex;
+    /* input and button in the same line */
+    gap: 10px;
+    /* space between input and button */
+    margin-bottom: 1rem;
+}
+
+input {
+    flex: 1;
+    /* use all the space available */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "Indie Flower", cursive;
+    font-size: 18px;
+}
+
+/* button to add tasks */
+button {
+    background-color: #00adb5;
+    color: white;
+    font-size: 18px;
+    font-family: "Indie Flower", cursive;
+    border: none;
+    border-radius: 10px;
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+}
+
+/* ----- LISTA DE TAREAS ----- */
+ul {
+    list-style: none;
+    /* Sin viñetas */
+    padding: 0;
+}
