@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: "Indie Flower", cursive;
+  color: #555879;
+  background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/11524.png'); 
+  background-position: center center; /* center the image */
+  background-size: cover; 
+  background-attachment: fixed; /* fix the image when scrolling */
+}
+
+h1 {
+    color: #555879;
+    font-weight: 900;
+}
