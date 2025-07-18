@@ -13,32 +13,35 @@
 
   <body>
     <header>
-      <div class="title-container">
-        <h1 id="title">My To-Do List</h1>
-      </div>
+      <h1>MY STICKY NOTES TO-DO LISTS</h1>
+      <p>Create up to 8 colorful sticky notes to organize your tasks!</p>
     </header>
 
-    <div class="name-list-container">
-        <h2 class="name-list">MY TOP GOALS IN LIFE</h2>
-        <div class="notebook">
-
-        </div>
-
+    <!-- container for the sticky notes -->
+    <div id="sticky-notes-container" class="sticky-container">
+      <label for="color-picker">Choose sticky color:</label>
+      <select id="color-picker">
+        <option value="#FFFA9E">Yellow</option>
+        <option value="#FFC3A6">Pink</option>
+        <option value="#9EFFD0">Green</option>
+        <option value="#A6D8FF">Blue</option>
+        <option value="#FF9E9E">Red</option>
+        <option value="#D9A6FF">Purple</option>
+        <option value="#FFD6A6">Orange</option>
+        <option value="#A6FFD6">Turquoise</option>
+      </select>
     </div>
 
-    <div class="form-container">
-      <form id="todo-form">
-        <input
-          id="todo-input"
-          type="text"
-          placeholder="write a task"
-          required
-        />
-        <button type="submit">Add</button>
-      </form>
-
-      <ul id="todo-list"></ul>
+    <!-- button to add new sticky notes -->
+    <div class="button-container">
+      <button id="add-sticky-btn" class="add-btn">
+        ➕ Add New Sticky Note
+      </button>
     </div>
+
+    <footer>
+      <p>Created by SakuraCAT 🌸!</p>
+    </footer>
 
     <script src="JS/script.js" defer></script>
   </body>

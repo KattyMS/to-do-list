@@ -12,3 +12,13 @@ h1 {
     color: #555879;
     font-weight: 900;
 }
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.sticky-note {
+  width: 400px;
+  height: 400px;
+}

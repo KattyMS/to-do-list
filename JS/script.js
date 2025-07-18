@@ -1,47 +1,183 @@
 
-const form = document.getElementById("todo-form");
-const input = document.getElementById("todo-input");
-const list = document.getElementById("todo-list");
+const container = document.getElementById("sticky-notes-container");
+const addStickyBtn = document.getElementById("add-sticky-btn");
+let stickyCount = 0; // Counter of sticky notes created
+const MAX_STICKIES = 8; // max limit
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();  // prevents page reloading
+let activeSticky = null; // the sticky note that is active only
 
-    const taskText = input.value.trim();  // gets the input text and removes spaces at the beginning and end
-    if(!taskText) return; // if the input is empty, do nothing
+function setActiveSticky(sticky) {
+  if (activeSticky && activeSticky !== sticky) {
+    // hide the form of the previous sticky note
+    const prevForm = activeSticky.querySelector("form");
+    if (prevForm) prevForm.style.display = "none";
+  }
 
-    const li = document.createElement("li"); // create a new <li> element for the task
+  //  show form of the actual sticky (only if have a fixed title)
+  const currentForm = sticky.querySelector("form");
+  const titleFixed = sticky.querySelector(".sticky-title-fixed");
+  
+  if (currentForm && titleFixed) {
+    currentForm.style.display = "block";
+  } else if (currentForm) {
+    // if there is not fixed title, hide the form
+  }
 
-    const checkbox = document.createElement("input"); // create a checkbox before the task
+  // update active sticky 
+  activeSticky = sticky;
+}
+
+function createStickyNote() {
+  if (stickyCount >= MAX_STICKIES) {
+    alert("You can only create up to 8 sticky notes!");
+    return;
+  }
+
+  stickyCount++; //  Increments the counter when add new note
+
+  // create the div container for the sticky notes
+  const sticky = document.createElement("div");
+  sticky.classList.add("sticky-note");
+  
+   // Obtener color seleccionado
+  const colorPicker = document.getElementById("color-picker");
+  const selectedColor = colorPicker.value;
+
+  // Asignar color al sticky
+  sticky.style.backgroundColor = selectedColor;
+
+  // title for sticky note
+  const titleInput = document.createElement("input");
+  titleInput.type = "text";
+  titleInput.placeholder = "Enter title...";
+  titleInput.classList.add("sticky-title");
+
+  // button to add title to the sticky note
+  const titleBtn = document.createElement("button");
+  titleBtn.textContent = "Add Title";
+  titleBtn.classList.add("title-btn");
+
+  // when push button, the title is h3 fixed
+  titleBtn.addEventListener("click", () => {
+    if (titleInput.value.trim() !== "") {
+      const title = document.createElement("h3");
+      title.textContent = titleInput.value;
+      title.classList.add("sticky-title-fixed");
+
+      // double click to edit title
+      title.addEventListener("dblclick", () => {
+        sticky.replaceChild(titleInput, title);
+        sticky.insertBefore(titleBtn, titleInput.nextSibling);
+        titleInput.value = title.textContent;
+        titleInput.focus()
+
+         // hide form until confirm the new title 
+        form.style.display = "none";
+      });
+
+      // replace input for title and hide button 
+      sticky.replaceChild(title, titleInput);
+      titleBtn.remove();
+
+      // show task form 
+      form.style.display = "block";
+
+      // activate this sticky note 
+      setActiveSticky(sticky);
+    }
+  });
+
+  // create form
+  const form = document.createElement("form");
+  form.style.display = "none"; // hide by defect
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Write a task";
+  input.required = true;
+
+  // create button "add"
+  const addButton = document.createElement("button");
+  addButton.textContent = "Add";
+
+  // put input and add button inside the form
+  form.appendChild(input);
+  form.appendChild(addButton);
+
+  // create the list of task
+  const ul = document.createElement("ul");
+
+  // event to add the task in the sticky note
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const taskText = input.value.trim(); // gets the input text and removes spaces at the beginning and end
+    if (!taskText) return;               // if the input is empty, do nothing
+            
+    // create an item list
+    const li = document.createElement("li");
+
+    // Create checkbox
+    const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
+    // task text
     const span = document.createElement("span");
-    span.textContent = taskText; // put the text of the task
+    span.textContent = taskText;
 
-    // event to cross out the text when the checkbox is checked
+    // event to check task completed
     checkbox.addEventListener("change", () => {
-        if(checkbox.checked) {
-            span.classList.add("completed");
-        }
-        else {
-            span.classList.remove("completed");
-        }
+      if (checkbox.checked) {
+        span.classList.add("completed");
+      } else {
+        span.classList.remove("completed");
+      }
     });
 
-    const deleteBtn = document.createElement("button"); // create a "X" button to delete the task
-    deleteBtn.textContent = "X"; 
+    // button to delete task
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.onclick = () => li.remove();
 
-    deleteBtn.onclick = () => li.remove(); // add event to the "X" button so it deletes the task when clicked
+    
+    ul.appendChild(li); // add item list inside the list task
+    li.appendChild(checkbox); // add checkbox inside the item list
+    li.appendChild(span); // add span inside the item list
+    li.appendChild(deleteBtn); // add delete button inside the item list 
 
-    li.appendChild(checkbox);
-    li.appendChild(span);
-    li.appendChild(deleteBtn); // put the button inside the <li>
+    input.value = "";  // clean the input value
+  });
 
-    list.appendChild(li); // add the complete <li> inside the <ul> list
+  // add button to delete complete sticky note
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "Delete Note";
+  closeBtn.classList.add("delete-sticky");
+  closeBtn.onclick = () => {
+    sticky.remove();
+    stickyCount--; // reduce the counter when a sticky note is deleted
+  };
 
-    input.value = ""; // clear the input so the user can write another task
+  
 
+  sticky.appendChild(titleInput);  // add title input inside the sticky note
+  sticky.appendChild(titleBtn);    // add title button inside the sticky note
+  sticky.appendChild(form);       // add form inside the sticky note
+  sticky.appendChild(ul);         // add ul inside the sticky note  
+  sticky.appendChild(closeBtn);    // add close button inside the sticky note
+
+  // to only activate it if click outside of the inputs or buttons
+ sticky.addEventListener("click", (e) => {
+  if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") {
+    setActiveSticky(sticky);
+  }
 });
 
+  // add all inside the principal container
+  container.appendChild(sticky);
+  setActiveSticky(sticky); // makes sticky active
 
+}
 
+// when user click creates a new sticky note
+addStickyBtn.addEventListener("click", createStickyNote);
 
