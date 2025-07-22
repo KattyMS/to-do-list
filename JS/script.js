@@ -2,7 +2,7 @@
 const container = document.getElementById("sticky-notes-container");
 const addStickyBtn = document.getElementById("add-sticky-btn");
 let stickyCount = 0; // Counter of sticky notes created
-const MAX_STICKIES = 8; // max limit
+const MAX_STICKIES = 10; // max limit
 
 let activeSticky = null; // the sticky note that is active only
 
@@ -29,7 +29,7 @@ function setActiveSticky(sticky) {
 
 function createStickyNote() {
   if (stickyCount >= MAX_STICKIES) {
-    alert("You can only create up to 8 sticky notes!");
+    alert("You can only create up to 10 sticky notes!");
     return;
   }
 
@@ -37,14 +37,7 @@ function createStickyNote() {
 
   // create the div container for the sticky notes
   const sticky = document.createElement("div");
-  sticky.classList.add("sticky-note");
-  
-   // Obtener color seleccionado
-  const colorPicker = document.getElementById("color-picker");
-  const selectedColor = colorPicker.value;
-
-  // Asignar color al sticky
-  sticky.style.backgroundColor = selectedColor;
+  sticky.classList.add("sticky-note", "color-1");
 
   // title for sticky note
   const titleInput = document.createElement("input");
@@ -150,14 +143,12 @@ function createStickyNote() {
 
   // add button to delete complete sticky note
   const closeBtn = document.createElement("button");
-  closeBtn.textContent = "Delete Note";
+  closeBtn.textContent = "x";
   closeBtn.classList.add("delete-sticky");
   closeBtn.onclick = () => {
     sticky.remove();
     stickyCount--; // reduce the counter when a sticky note is deleted
   };
-
-  
 
   sticky.appendChild(titleInput);  // add title input inside the sticky note
   sticky.appendChild(titleBtn);    // add title button inside the sticky note
@@ -167,16 +158,30 @@ function createStickyNote() {
 
   // to only activate it if click outside of the inputs or buttons
  sticky.addEventListener("click", (e) => {
-  if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") {
-    setActiveSticky(sticky);
-  }
-});
+    if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON" && !e.target.classList.contains("color-btn")) {
+      setActiveSticky(sticky);
+    }
+  });
 
   // add all inside the principal container
   container.appendChild(sticky);
   setActiveSticky(sticky); // makes sticky active
 
 }
+
+//  global color selector
+const colorButtons = document.querySelectorAll("#color-selector .color-btn");
+colorButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (activeSticky) {
+      activeSticky.classList.remove("color-1", "color-2", "color-3", "color-4", "color-5");
+      const selectedClass = btn.dataset.color;
+      activeSticky.classList.add(selectedClass);
+    } else {
+      alert("Select a sticky note first!");
+    }
+  });
+});
 
 // when user click creates a new sticky note
 addStickyBtn.addEventListener("click", createStickyNote);

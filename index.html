@@ -17,27 +17,24 @@
       <p>Create up to 8 colorful sticky notes to organize your tasks!</p>
     </header>
 
-    <!-- container for the sticky notes -->
-    <div id="sticky-notes-container" class="sticky-container">
-      <label for="color-picker">Choose sticky color:</label>
-      <select id="color-picker">
-        <option value="#FFFA9E">Yellow</option>
-        <option value="#FFC3A6">Pink</option>
-        <option value="#9EFFD0">Green</option>
-        <option value="#A6D8FF">Blue</option>
-        <option value="#FF9E9E">Red</option>
-        <option value="#D9A6FF">Purple</option>
-        <option value="#FFD6A6">Orange</option>
-        <option value="#A6FFD6">Turquoise</option>
-      </select>
-    </div>
-
     <!-- button to add new sticky notes -->
     <div class="button-container">
       <button id="add-sticky-btn" class="add-btn">
         ➕ Add New Sticky Note
       </button>
     </div>
+
+    <!-- color selector for the sticky notes-->
+    <div id="color-selector" class="color-palette-global">
+      <div class="color-btn color-1" data-color="color-1"></div>
+      <div class="color-btn color-2" data-color="color-2"></div>
+      <div class="color-btn color-3" data-color="color-3"></div>
+      <div class="color-btn color-4" data-color="color-4"></div>
+      <div class="color-btn color-5" data-color="color-5"></div>
+    </div>
+
+    <!-- container for the sticky notes -->
+    <div id="sticky-notes-container" class="sticky-container"></div>
 
     <footer>
       <p>Created by SakuraCAT 🌸!</p>

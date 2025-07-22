@@ -13,12 +13,66 @@ h1 {
     font-weight: 900;
 }
 
+.color-palette-global {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.color-1 { background-color: #FFFACD; }
+.color-2 { background-color: #FFDAB9; }
+.color-3 { background-color: #E6E6FA; }
+.color-4 { background-color: #C1E1C1; }
+.color-5 { background-color: #FFB6C1; }
+ 
+
+
 .completed {
   text-decoration: line-through;
   color: gray;
 }
 
-.sticky-note {
-  width: 400px;
-  height: 400px;
+.color-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid white;
 }
+
+#sticky-notes-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Max 5 columns */
+  gap: 15px; 
+  justify-content: center;
+  max-width: 1200px; 
+  margin: 20px auto;
+}
+
+
+.sticky-note {
+  border-radius: 10px;
+  padding: 15px;
+  width: 200px;
+  min-height: 220px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.delete-sticky {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.delete-sticky:hover {
+  color: red;
+}
+
