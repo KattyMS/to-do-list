@@ -19,13 +19,14 @@ h1 {
   margin: 10px 0;
 }
 
-.color-1 { background-color: #FFFACD; }
+.color-1 { background-color: #F6EACB; }
 .color-2 { background-color: #FFDAB9; }
-.color-3 { background-color: #E6E6FA; }
-.color-4 { background-color: #C1E1C1; }
-.color-5 { background-color: #FFB6C1; }
+.color-3 { background-color: #F1D3CE; }
+.color-4 { background-color: #D1E9F6; }
+.color-5 { background-color: #EECAD5; }
+.color-6 { background-color: #CDC1FF; }
+.color-7 { background-color: #E0E5B6; }
  
-
 
 .completed {
   text-decoration: line-through;
@@ -74,5 +75,56 @@ h1 {
 
 .delete-sticky:hover {
   color: red;
+}
+
+
+.sticky-note ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.sticky-note ul li button {
+  display: none; /* hide button "X" at begining */
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.sticky-title, .task-input{
+  flex: 1;
+  padding: 6px 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 12px;
+}
+
+.title-btn, .task-btn {
+  padding: 6px 6px;
+  background: #6C4E31;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.3s;
+
+}
+
+.title-btn:hover {
+  background: #493628;
+}
+
+.task-input {
+  margin-right: 10px;
+}
+
+.task-btn {
+
 }
 
