@@ -3,7 +3,7 @@
 ## Overview
 A simple and interactive sticky notes application built with HTML, CSS, and JavaScript. It allows users to create colorful sticky notes, add titles, manage tasks, and customize each note with pastel color themes.
 
-##Features
+## Features
 - Create up to 10 sticky notes
 - Editable titles (double-click to edit)
 - Add, check off, and delete tasks individually
