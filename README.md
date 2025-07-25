@@ -36,7 +36,7 @@ A simple and interactive sticky notes application built with HTML, CSS, and Java
 │   └── script.js
 └── README.md
 
-##　Future Improvements
+## Future Improvements
 - Drag & Drop: Allow users to move sticky notes around the board.
 - Local Storage: Save sticky notes and tasks so they persist after refreshing.
 - Responsive Design for Mobile: Optimize for smaller screens.
