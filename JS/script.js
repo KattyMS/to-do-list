@@ -16,9 +16,13 @@ function setActiveSticky(sticky) {
   const currentForm = sticky.querySelector("form");
   const titleFixed = sticky.querySelector(".sticky-title-fixed");
 
-  if (currentForm && titleFixed) {
-    currentForm.style.display = "block";
+  if (currentForm) {
+  if (titleFixed) {
+    currentForm.style.display = "block"; // show tasks form if title exists
+  } else {
+    currentForm.style.display = "none"; // hide if no title yet
   }
+}
 
   activeSticky = sticky;
 }
@@ -33,7 +37,7 @@ function createStickyNote() {
   stickyCount++;
 
   const sticky = document.createElement("div");
-  sticky.classList.add("sticky-note", "color-1");
+  sticky.classList.add("sticky-note", "color-5");
 
   // Container for input and button
   const titleContainer = document.createElement("div");
@@ -47,38 +51,52 @@ function createStickyNote() {
 
   // title button
   const titleBtn = document.createElement("button");
-  titleBtn.textContent = "Add Title";
+  titleBtn.textContent = "Add";
   titleBtn.classList.add("title-btn");
 
   // Append input and button into container
   titleContainer.appendChild(titleInput);
   titleContainer.appendChild(titleBtn);
 
-  titleBtn.addEventListener("click", () => {
-    if (titleInput.value.trim() !== "") {
-      const title = document.createElement("h3");
-      title.textContent = titleInput.value;
-      title.classList.add("sticky-title-fixed");
+  titleBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // Evita que el clic se propague al documento
 
-      // Replace the entire container with the title
-      sticky.replaceChild(title, titleContainer);
+  if (titleInput.value.trim() !== "") {
+    const title = document.createElement("h3");
+    title.textContent = titleInput.value;
+    title.classList.add("sticky-title-fixed");
 
-      // Show the form now that title is set
-      form.style.display = "block";
+    // Reemplazar contenedor (input + botón) por el título
+    sticky.replaceChild(title, titleContainer);
 
-      // Set this sticky as active
-      setActiveSticky(sticky);
+    // Mostrar el formulario y enfocar el input de tareas
+    form.style.display = "block";
+    input.focus(); // ✅ Foco automático
 
-      // Enable editing by double-click
-      title.addEventListener("dblclick", () => {
-        // Restore input and button
-        titleInput.value = title.textContent;
-        sticky.insertBefore(titleContainer, form);
-        sticky.removeChild(title);
-        form.style.display = "none";
-      });
-    }
-  });
+    // Establecer sticky como activo
+    setActiveSticky(sticky);
+
+    // Habilitar edición por doble clic
+    title.addEventListener("dblclick", (e) => {
+      e.stopPropagation(); // Para que no cierre el form
+      // Restaurar input y botón
+      titleInput.value = title.textContent;
+      sticky.insertBefore(titleContainer, form);
+      sticky.removeChild(title);
+      form.style.display = "none";
+    });
+  }
+});
+
+
+  // enable enter button for add title
+  titleInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    titleBtn.click(); 
+  }
+});
+
 
   // Form for tasks
   const form = document.createElement("form");
@@ -114,8 +132,9 @@ function createStickyNote() {
     span.textContent = taskText;
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "X";
+    deleteBtn.textContent = "delete";
     deleteBtn.style.display = "none";
+    deleteBtn.classList.add("task-btn-delete")
 
     // Show delete when task is active
     li.addEventListener("click", (e) => {
@@ -202,24 +221,34 @@ colorButtons.forEach((btn) => {
 
 //  Global click: hide delete buttons & hide form
 document.addEventListener("click", (e) => {
-  // Hide delete button
+  // Hide delete button for tasks
   if (activeTask) {
     const deleteBtn = activeTask.querySelector("button");
     if (deleteBtn) deleteBtn.style.display = "none";
     activeTask = null;
   }
 
-  // Hide form only if click is outside sticky AND color selector
+  // Ignore clicks on:
+  // - Color selector
+  // - Add Sticky button
+  // - Title input
+  // - Title button
   if (
-    activeSticky &&
-    !activeSticky.contains(e.target) &&
-    !e.target.closest("#color-selector") &&
-    e.target.id !== "add-sticky-btn"
+    e.target.closest("#color-selector") ||
+    e.target.id === "add-sticky-btn" ||
+    e.target.classList.contains("title-btn") ||
+    e.target.classList.contains("sticky-title")
   ) {
+    return; // Do nothing
+  }
+
+  // Hide form if click is outside the active sticky
+  if (activeSticky && !activeSticky.contains(e.target)) {
     const form = activeSticky.querySelector("form");
     if (form) form.style.display = "none";
     activeSticky = null;
   }
 });
+
 
 addStickyBtn.addEventListener("click", createStickyNote);

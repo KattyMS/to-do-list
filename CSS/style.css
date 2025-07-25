@@ -1,32 +1,120 @@
-body {
+html, body {
+  height: 100%; /* Necesario para usar flex en toda la página */
   margin: 0;
-  font-family: "Indie Flower", cursive;
-  color: #555879;
-  background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/11524.png'); 
-  background-position: center center; /* center the image */
-  background-size: cover; 
-  background-attachment: fixed; /* fix the image when scrolling */
+  display: flex;
+  flex-direction: column;
 }
 
-h1 {
-    color: #555879;
-    font-weight: 900;
+
+/* El contenedor principal (donde están los stickies) ocupa el espacio disponible */
+#sticky-notes-container {
+  flex: 1; /* Toma todo el espacio disponible antes del footer */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 10px auto;
+  border-radius: 10px;
+  padding: 20px;
+  align-content: start; /* ❗ Evita que se estiren en vertical */
+}
+
+
+
+body {
+  margin: 0;
+  color: #6c4e31;
+  background-image: url("https://4kwallpapers.com/images/walls/thumbs_3t/11524.png");
+  background-position: center center; /* center the image */
+  background-size: cover;
+  background-attachment: fixed; /* fix the image when scrolling */
+
+}
+
+h1,
+h2 {
+  font-family: "Gaegu", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+p {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  text-align: center;
+}
+
+.add-btn {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  padding: 8px 10px;
+  background: #6c4e31;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin: 20px auto;
+}
+
+.button-container {
+  text-align: left;
+  margin: auto auto 0 10px;
+}
+
+.color-palette {
+  text-align: left;
+  margin: auto auto 0 10px;
 }
 
 .color-palette-global {
   display: flex;
   gap: 10px;
-  margin: 10px 0;
+  justify-content: left;
+  background-color: #ffffff4d; /* white with 80% of opacity */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 220px; 
+  padding: 6px 8px;
+  margin: auto auto 0 10px;
 }
 
-.color-1 { background-color: #F6EACB; }
-.color-2 { background-color: #FFDAB9; }
-.color-3 { background-color: #F1D3CE; }
-.color-4 { background-color: #D1E9F6; }
-.color-5 { background-color: #EECAD5; }
-.color-6 { background-color: #CDC1FF; }
-.color-7 { background-color: #E0E5B6; }
- 
+
+
+.color-1 {
+  background-color: #f6eacb;
+}
+.color-2 {
+  background-color: #ffdab9;
+}
+.color-3 {
+  background-color: #f1d3ce;
+}
+.color-4 {
+  background-color: #d1e9f6;
+}
+.color-5 {
+  background-color: #eecad5;
+}
+.color-6 {
+  background-color: #cdc1ff;
+}
+.color-7 {
+  background-color: #e0e5b6;
+}
 
 .completed {
   text-decoration: line-through;
@@ -41,25 +129,24 @@ h1 {
   border: 1px solid white;
 }
 
-#sticky-notes-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Max 5 columns */
-  gap: 15px; 
-  justify-content: center;
-  max-width: 1200px; 
-  margin: 20px auto;
-}
+
 
 
 .sticky-note {
   border-radius: 10px;
   padding: 15px;
-  width: 200px;
+  width: 220px;
   min-height: 220px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  text-align: center;
 }
 
 .delete-sticky {
@@ -77,11 +164,12 @@ h1 {
   color: red;
 }
 
-
 .sticky-note ul {
   list-style: none;
   padding-left: 0;
   margin-left: 0;
+  text-align: left;
+  font-size: 18px;
 }
 
 .sticky-note ul li button {
@@ -96,27 +184,37 @@ h1 {
   margin-top: 15px;
 }
 
-.sticky-title, .task-input{
+.sticky-title,
+.task-input {
   flex: 1;
+  max-width: 120px;
   padding: 6px 6px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 12px;
+  font-size: 1.2rem;
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.title-btn, .task-btn {
-  padding: 6px 6px;
-  background: #6C4E31;
+
+.task-btn, .title-btn {
+  padding: 6px 20px;
+  background: #6c4e31;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   transition: background 0.3s;
-
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.title-btn:hover {
+.title-btn:hover, .add-btn:hover {
   background: #493628;
 }
 
@@ -124,7 +222,22 @@ h1 {
   margin-right: 10px;
 }
 
-.task-btn {
-
+.task-btn-delete {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  padding: 0 8px;
+  background: #6c4e31;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  
 }
-
+footer {
+  text-align: center;
+  background-color: #f1d3ce4d;
+}
